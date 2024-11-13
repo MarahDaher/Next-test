@@ -26,7 +26,7 @@ $ npm install
 
 ```bash
 # development
-$ npm start
+$ npm run dev
 ```
 
 ## Features
