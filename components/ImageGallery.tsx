@@ -8,6 +8,8 @@ import {
   ImageListItem,
   ImageListItemBar,
   Stack,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { ImageModel } from "@/app/models/image";
 
@@ -28,11 +30,13 @@ interface ImageGalleryProps {
  */
 export default function ImageGallery(props: ImageGalleryProps) {
   const { items, categories, onDelete } = props;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <>
       {categories && (
-        <ImageList cols={4}>
+        <ImageList cols={isMobile ? 1 : 4}>
           {items.map((item: ImageModel) => {
             // Format the upload date
             const formattedDate = format(

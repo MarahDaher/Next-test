@@ -13,6 +13,8 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { ImageModel } from "../../models/image";
 import { toast } from "react-toastify";
@@ -30,6 +32,9 @@ function parseSize(sizeStr: string): number {
 }
 
 export default function ImageManagement() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const { data: images, isLoading } = useImages();
   const { data: categories } = useCategories();
   const uploadImageMutation = useUploadImage();
@@ -116,8 +121,18 @@ export default function ImageManagement() {
         </Button>
       </Stack>
 
-      <Stack direction="row" justifyContent="space-between" spacing={3} py={2}>
-        <Stack direction="row" spacing={2} alignItems="center" width="50%">
+      <Stack
+        direction={isMobile ? "column" : "row"}
+        justifyContent="space-between"
+        spacing={3}
+        py={2}
+      >
+        <Stack
+          direction="row"
+          gap={2}
+          alignItems="center"
+          width={isMobile ? "100%" : "50%"}
+        >
           <TextField
             label="Search by Name"
             variant="outlined"
@@ -146,7 +161,7 @@ export default function ImageManagement() {
           spacing={4}
           alignItems="center"
           justifyContent="end"
-          width="50%"
+          width={isMobile ? "100%" : "50%"}
         >
           <Typography gutterBottom>Filter by Size (MB)</Typography>
           <Slider
